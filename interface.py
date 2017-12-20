@@ -1,6 +1,6 @@
 ##############################################
 # CMU 05-899E Computing for Good
-# Group: Detecting Minging Sites in DR Congo
+# Group: Identifying Minging Sites in DR Congo
 # Wen Li
 # wenl2@anderw.cmu.edu
 # Dec. 2017
