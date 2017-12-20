@@ -11,7 +11,7 @@ import Tkinter as tk
 import os
 import xlrd
 import csv
-
+# Window
 window = tk.Tk()
 window.title('detectMiningSites')
 window.geometry('650x270')
@@ -25,7 +25,9 @@ guidance = tk.Label(window,
              width=200, height=4)
 guidance.pack()
 #######################################Guidance####################
-#######################################Step1####################
+
+#######################################Step1#######################
+# Layout
 s1 = tk.Frame()
 s1_label = tk.Label(s1, text='step1', font=('Arial', 12), width=17, height=1)
 s1_label.pack()
@@ -70,7 +72,10 @@ s1_3.pack()
 s1_4.pack()
 s1_5.pack()
 
-def regionCoors(x1 = 0.0, y1 = 0.0, x2 = 0.0, y2 = 0.0, coorsCsvPath = "D:\\coor.csv"):
+# Get coordinates
+def regionCoors(x1 = 0.0, y1 = 0.0, x2 = 0.0, y2 = 0.0, coorsCsvPath = "D:/coor.csv"):
+    # Step
+    # According to the internal feature of QGIS
     l = abs(28.702384 - 28.694822)
     w = abs(0.323010 - 0.320145)
     nL = int(math.ceil((x2 - x1) / l))
@@ -89,6 +94,7 @@ def regionCoors(x1 = 0.0, y1 = 0.0, x2 = 0.0, y2 = 0.0, coorsCsvPath = "D:\\coor
             no += 1
     f.close()
 
+# Action
 def step1():
     step1X1 = float(step1_x1.get())
     step1X2 = float(step1_x2.get())
@@ -97,11 +103,14 @@ def step1():
     step1Path = step1_path.get()
     regionCoors(step1X1, step1Y1, step1X2, step1Y2, step1Path)
 
+# The first button
 step1_button = tk.Button(s1, text='Create coors.csv', width=15, height=2, command=step1)
 step1_button.pack()
 s1.pack(side="left")
-#######################################Step1####################
-#######################################Step3####################
+#######################################Step1##############################
+
+#######################################Step3##############################
+#Layout
 s3 = tk.Frame()
 s3_label = tk.Label(s3, text='step3', font=('Arial', 12), width=25, height=1)
 s3_label.pack(side="top")
@@ -122,6 +131,7 @@ step3_sizeBar = tk.Entry(s3_2, show=None)
 step3_sizeBar.pack(side="left")
 s3_2.pack(side="top")
 
+# Detect and delete low-resolution images
 def detectLowRes(file_dir = "D:\\coor.xlsx", sizeBar = 220):
     # file_dir: Directory of files
     # sizeBar: KB
@@ -138,6 +148,7 @@ def detectLowRes(file_dir = "D:\\coor.xlsx", sizeBar = 220):
         str1 = files[i].split('.')
         typeStr = str1[-1]
         if typeStr == "jpg":
+            # Get the size of images in KB
             size = os.path.getsize(os.path.join(root, files[i]))/1024
             if size < sizeBar:
                 sum += 1
@@ -150,6 +161,7 @@ def detectLowRes(file_dir = "D:\\coor.xlsx", sizeBar = 220):
     f.write("There are " + str(sum) + " low-resolution images." + '\n')
     f.close()
 
+# Action
 def step3():
     step3Path = step3_path.get()
     step3SizeBar = float(step3_sizeBar.get())
@@ -158,5 +170,5 @@ def step3():
 step3_button = tk.Button(s3, text='Delete useless images', width=20, height=2, command=step3)
 step3_button.pack(side="bottom")
 s3.pack(side="top")
-#######################################Step3####################
+#######################################Step3#################################
 window.mainloop()
